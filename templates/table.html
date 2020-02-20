@@ -1,0 +1,19 @@
+<table class="row-table row-table--expanded@xs max-width-adaptive-xl margin-auto js-row-table" aria-label="Table Example">
+  <thead class="row-table__header">
+    <tr class="row-table__row">
+      <th class="row-table__cell row-table__cell--th text-right" aria-hidden="true"></th>
+      <th class="row-table__cell row-table__cell--th text-right">Адрес</th>
+    </tr>
+  </thead>
+
+  <tbody class="row-table__body">
+    {% for company in companies %}
+        <tr class="row-table__row">
+          <th class="row-table__cell row-table__cell--th text-left">
+            <span class="row-table__th-inner">{{ company.title }}</span>
+          </th>
+          <td class="row-table__cell text-right">{{ company.address }}</td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>

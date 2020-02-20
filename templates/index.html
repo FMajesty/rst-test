@@ -1,0 +1,57 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>document.getElementsByTagName("html")[0].className += " js";</script>
+  <script>
+    if('CSS' in window && CSS.supports('color', 'var(--color-var)')) {
+      document.write('<link rel="stylesheet" href="{% static 'css/style.css' %}">');
+    } else {
+      document.write('<link rel="stylesheet" href="{% static 'css/style-fallback.css' %}">');
+    }
+  </script>
+  <noscript>
+    <link rel="stylesheet" href="{% static 'css/style-fallback.css' %}">
+  </noscript>
+  <title>Тестовое задание РСТ</title>
+</head>
+<body>
+<form id="companies-form" class="max-width-adaptive-sm margin-auto margin-top-sm">
+    <label class="form-label margin-bottom-xxs text-bold" for="companyTitle">Введите название компании в первую строку и адрес во вторую</label>
+    <div class="input-merger form-control width-100% grid">
+      <input required type="text" class="reset input-merger__input col" name="company_title" id="companyTitle" placeholder="Название компании">
+      <input required type="text" class="reset input-merger__input col" name="company_address" id="companyAddress" placeholder="Адрес компании">
+    </div>
+    <button class="btn btn--primary margin-top-xs" type="submit">Показать компании</button>
+</form>
+<div id="placeholder"></div>
+<script src="{% static 'js/scripts.min.js' %}"></script>
+<script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+<script src="{% static 'js/notiflix-1.9.1.min.js' %}"></script>
+<script>
+    $(function () {
+        var $form = $('#companies-form');
+        $form.submit(function (event) {
+            event.preventDefault();
+            var $formData = $(this).serialize();
+            var $thisURL = '{% url 'search' %}';
+            $.ajax({
+                method: 'GET',
+                url: $thisURL+'?'+$formData,
+                success: function (e) {
+                    if(e.success){
+                        Notiflix.Notify.Success(e.message);
+                        $('#placeholder').html(e.html)
+                    } else {
+                        Notiflix.Notify.Failure (e.message)
+                        $('#placeholder').html('')
+                    }
+                }
+            })
+        })
+    })
+</script>
+</body>
+</html>
