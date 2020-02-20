@@ -1,0 +1,5 @@
+django==2.2.10
+psycopg2
+mechanicalsoup
+beautifulsoup4
+lxml
